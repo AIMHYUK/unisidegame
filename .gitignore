@@ -475,5 +475,8 @@ crashlytics-build.properties
 # Ignore all local history of files
 .history
 .ionide
+# .gitignore 파일 내용에 추가
+Library/PackageCache/com.unity.burst@1.8.10/.Runtime/libburst-llvm-15.dylib
+
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp,unity,visualstudiocode
