@@ -7,7 +7,7 @@ public class NewBehaviourScript1 : MonoBehaviour
     Rigidbody2D rbody;
     float axisH = 0.0f;
     public float speed = 3.0f;
-    public float jump = 9.0f;
+    public float jump = 10.0f;
     public LayerMask groundLayer;
     bool goJump = false;
     bool onGround = false;    // Start is called before the first frame update
