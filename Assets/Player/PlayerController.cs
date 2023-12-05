@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float jump = 10.0f;
     public LayerMask groundLayer;
     bool goJump = false;
-    bool onGround = false;    // Start is called before the first frame update
+    bool onGround = false;    
 
     Animator animator;
     public string stopAnime = "PlayerStop";
@@ -112,18 +112,16 @@ public class PlayerController : MonoBehaviour
     public void Goal(){
         animator.Play(goalAnime);
         gameState = "gameclear";
-        Debug.Log(gameState);
         Debug.Log("클리어");
         GameStop();
     }
     public void GameOver(){
         animator.Play(deadAnime);
         gameState = "gameover";
-        Debug.Log(gameState);
         Debug.Log("게임오버");
-        GameStop();
         GetComponent<CapsuleCollider2D>().enabled = false; //플레이어 충돌판정 비활성
         rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse); //플레이어 위로 튀어오르게
+        GameStop();
     }
     void GameStop(){ //게임중지
         Rigidbody2D rbody = GetComponent<Rigidbody2D>();
