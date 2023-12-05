@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript1 : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rbody;
     float axisH = 0.0f;
