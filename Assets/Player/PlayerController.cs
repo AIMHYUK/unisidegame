@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public int score = 0; //점수
     Rigidbody2D rbody;
     float axisH = 0.0f;
     public float speed = 3.0f;
     public float jump = 10.0f;
     public LayerMask groundLayer;
     bool goJump = false;
-    bool onGround = false;    
+    bool onGround = false;
 
     Animator animator;
     public string stopAnime = "PlayerStop";
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
     public static string gameState = "playing"; //게임상태
     void Start()
     {
-        rbody = this.GetComponent<Rigidbody2D>(); 
+        rbody = this.GetComponent<Rigidbody2D>();
 
         animator = GetComponent<Animator>();
         nowAnime = stopAnime;
@@ -34,7 +35,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameState != "playing"){ //처음에 확인해야 못움직이게 할 수 있음
+        if (gameState != "playing")
+        { //처음에 확인해야 못움직이게 할 수 있음
             return;
         }
         axisH = Input.GetAxisRaw("Horizontal"); //방향키 어디 눌렸는지 우측이면 +0.1f
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("왼쪽 이동");
             transform.localScale = new Vector2(-1, 1);
         }
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             Jump();
         }
@@ -56,11 +58,12 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
 
-        if(gameState != "playing"){ //처음에 확인해야 못움직이게 할 수 있음
+        if (gameState != "playing")
+        { //처음에 확인해야 못움직이게 할 수 있음
             return;
         }
         onGround = Physics2D.Linecast(transform.position, transform.position - (transform.up * 0.1f), groundLayer);
-        if(onGround || axisH != 0)
+        if (onGround || axisH != 0)
         {
             rbody.velocity = new Vector2(axisH * speed, rbody.velocity.y);
         }
@@ -87,12 +90,12 @@ public class PlayerController : MonoBehaviour
             nowAnime = jumpAnime;
         }
 
-        if(nowAnime != oldAnime)
+        if (nowAnime != oldAnime)
         {
-                oldAnime = nowAnime;
-                animator.Play(nowAnime);
-            }
-        
+            oldAnime = nowAnime;
+            animator.Play(nowAnime);
+        }
+
         //점프
     }
     public void Jump()
@@ -102,30 +105,44 @@ public class PlayerController : MonoBehaviour
     }
 
     //접촉시작
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.gameObject.tag == "Goal") {
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Goal")
+        {
             Goal();
         }
-        else if(collision.gameObject.tag == "Dead") {
+        else if (collision.gameObject.tag == "Dead")
+        {
             GameOver();
-        }}
-    public void Goal(){
-        animator.Play(goalAnime);
-        gameState = "gameclear";
-        Debug.Log("클리어");
-        GameStop();
+        }
+        else if (collision.gameObject.tag == "ScoreItem")
+        {
+            ItemData item = collision.gameObject.GetComponent<ItemData>();
+            score = item.value;
+            Destroy(collision.gameObject); //아이템 제거
+
+        }
     }
-    public void GameOver(){
-        animator.Play(deadAnime);
-        gameState = "gameover";
-        Debug.Log("게임오버");
-        GetComponent<CapsuleCollider2D>().enabled = false; //플레이어 충돌판정 비활성
-        rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse); //플레이어 위로 튀어오르게
-        GameStop();
+    public void Goal()
+        {
+            animator.Play(goalAnime);
+            gameState = "gameclear";
+            Debug.Log("클리어");
+            GameStop();
+        }
+        public void GameOver()
+        {
+            animator.Play(deadAnime);
+            gameState = "gameover";
+            Debug.Log("게임오버");
+            GetComponent<CapsuleCollider2D>().enabled = false; //플레이어 충돌판정 비활성
+            rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse); //플레이어 위로 튀어오르게
+            GameStop();
+        }
+        void GameStop()
+        { //게임중지
+            Rigidbody2D rbody = GetComponent<Rigidbody2D>();
+            rbody.velocity = new Vector2(0, 0); //속도를 0으로 해서 강제정지
+        }
     }
-    void GameStop(){ //게임중지
-        Rigidbody2D rbody = GetComponent<Rigidbody2D>();
-        rbody.velocity = new Vector2(0, 0); //속도를 0으로 해서 강제정지
-    }
-}
 

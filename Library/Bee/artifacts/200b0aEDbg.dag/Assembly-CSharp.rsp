@@ -376,6 +376,7 @@
 "Assets/Script/CameraManager.cs"
 "Assets/Script/ChangeScene.cs"
 "Assets/Script/GameManager.cs"
+"Assets/Script/ItemData.cs"
 "Assets/Script/TimeController.cs"
 -langversion:9.0
 
