@@ -67,12 +67,15 @@
     <Compile Include="Assets/Script/ResultManager.cs" />
     <Compile Include="Assets/Script/ItemData.cs" />
     <Compile Include="Assets/Script/MovingBlock.cs" />
+    <Compile Include="Assets/Script/CannonController.cs" />
+    <Compile Include="Assets/Script/EnemyController.cs" />
     <Compile Include="Assets/Script/GimmickBlock.cs" />
     <Compile Include="Assets/Script/CameraManager.cs" />
     <Compile Include="Assets/Script/GameManager.cs" />
     <Compile Include="Assets/Script/TimeController.cs" />
     <Compile Include="Assets/Script/ChangeScene.cs" />
     <Compile Include="Assets/Player/PlayerController.cs" />
+    <Compile Include="Assets/Script/ShellController.cs" />
     <Compile Include="Assets/Script/SwitchAction.cs" />
   </ItemGroup>
   <ItemGroup>
