@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour
             rbody.velocity = new Vector2(-speed, rbody.velocity.y);
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
      {
         if(direction == "right")
         {

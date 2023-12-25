@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     TimeController timeCnt;
 
     Image titleImage;
+
+    public AudioClip meGameOver;
+    public AudioClip meGameClear; //게임 오버&클리어
     void Start() //첫 프레임 호출전에 호출
     {
         Invoke("InactiveImage", 1.0f); //이미지숨기기
@@ -56,6 +59,12 @@ public class GameManager : MonoBehaviour
             totalScore += stageScore;
             stageScore = 0;
             UpdateScore();
+
+            AudioSource soundPlayer = GetComponent<AudioSource>();
+            if(soundPlayer != null){
+            soundPlayer.Stop();
+            soundPlayer.PlayOneShot(meGameClear); //meGameClear를 한번 재생
+         }
         }
 
         else if (PlayerController.gameState == "gameover"){ //게임오버
@@ -70,6 +79,11 @@ public class GameManager : MonoBehaviour
             if(timeCnt != null){
                 timeCnt.isTimeOver = true;
             }
+            AudioSource soundPlayer = GetComponent<AudioSource>();
+            if(soundPlayer != null){
+            soundPlayer.Stop();
+            soundPlayer.PlayOneShot(meGameOver); //meGameOver를 한번 재생
+        }
         }
         else if(PlayerController.gameState == "playing"){ //게임중
             GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -90,6 +104,7 @@ public class GameManager : MonoBehaviour
                 UpdateScore();
             }
         }
+
     }
     void InactiveImage(){
         mainImage.SetActive(false); //왜 이미지만 따로 만들었을까?
